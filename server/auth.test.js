@@ -1,7 +1,7 @@
 const request = require('supertest-as-promised')
 const {expect} = require('chai')
 const db = require('APP/db')
-const User = require('APP/db/models/user')
+const Member = require('APP/db/models/member')
 const app = require('./start')
 
 const alice = {
@@ -10,10 +10,10 @@ const alice = {
 }
 
 describe('/api/auth', () => {
-  before('create a user', () =>
+  before('create a member', () =>
     db.didSync
       .then(() =>
-        User.create(
+        Member.create(
           {email: alice.username,
           password: alice.password
         })
@@ -35,24 +35,24 @@ describe('/api/auth', () => {
         .post('/api/auth/local/login')
         .send({username: alice.username, password: 'wrong'})
         .expect(401)
-      )      
+      )
   })
 
   describe('GET /whoami', () => {
     describe('when logged in,', () => {
       const agent = request.agent(app)
       before('log in', () => agent
-        .post('/api/auth/local/login') 
+        .post('/api/auth/local/login')
         .send(alice))
 
       it('responds with the currently logged in user', () =>
         agent.get('/api/auth/whoami')
-          .set('Accept', 'application/json')        
-          .expect(200)          
+          .set('Accept', 'application/json')
+          .expect(200)
           .then(res => expect(res.body).to.contain({
             email: alice.username
           }))
-      )      
+      )
     })
 
     it('when not logged in, responds with an empty object', () =>
@@ -66,7 +66,7 @@ describe('/api/auth', () => {
     const agent = request.agent(app)
 
     before('log in', () => agent
-      .post('/api/auth/local/login') 
+      .post('/api/auth/local/login')
       .send(alice))
 
     it('logs you out and redirects to whoami', () => agent
