@@ -6,7 +6,9 @@
 
 const Member= require('./member')
 const OAuth = require('./oauth')
+const Pod = require('./pod')
 
 OAuth.belongsTo(Member)
 Member.hasOne(OAuth)
-module.exports = {Member}
+
+module.exports = {Member, Pod, OAuth}
