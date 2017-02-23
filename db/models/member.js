@@ -19,7 +19,7 @@ const Member = db.define('members', {
 		},
     unique: true
   },
-  squads: {
+  pods: {
     type: Sequelize.ARRAY(Sequelize.INTEGER)
   },
   isLeader: {
