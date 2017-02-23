@@ -1,20 +1,20 @@
 const request = require('supertest-as-promised')
 const {expect} = require('chai')
 const db = require('APP/db')
-const User = require('APP/db/models/user')
+const Member = require('APP/db/models/member')
 const app = require('./start')
 
-describe('/api/users', () => {
+describe('/api/members', () => {
   describe('when not logged in', () => {
     it('GET /:id fails 401 (Unauthorized)', () =>
       request(app)
-        .get(`/api/users/1`)
+        .get(`/api/members/1`)
         .expect(401)
-    )    
+    )
 
-    it('POST creates a user', () =>
+    it('POST creates a member', () =>
       request(app)
-        .post('/api/users')
+        .post('/api/members')
         .send({
           email: 'beth@secrets.org',
           password: '12345'
@@ -22,9 +22,9 @@ describe('/api/users', () => {
         .expect(201)
     )
 
-    it('POST redirects to the user it just made', () =>
+    it('POST redirects to the member it just made', () =>
       request(app)
-        .post('/api/users')
+        .post('/api/members')
         .send({
           email: 'eve@interloper.com',
           password: '23456',
@@ -32,7 +32,7 @@ describe('/api/users', () => {
         .redirects(1)
         .then(res => expect(res.body).to.contain({
           email: 'eve@interloper.com'
-        }))        
+        }))
     )
   })
 })

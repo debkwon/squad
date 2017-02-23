@@ -2,33 +2,33 @@ const app = require('APP'), {env} = app
 const debug = require('debug')(`${app.name}:auth`)
 const passport = require('passport')
 
-const User = require('APP/db/models/user')
+const Member = require('APP/db/models/member')
 const OAuth = require('APP/db/models/oauth')
 const auth = require('express').Router()
 
 
 /*************************
  * Auth strategies
- * 
+ *
  * The OAuth model knows how to configure Passport middleware.
  * To enable an auth strategy, ensure that the appropriate
  * environment variables are set.
- * 
+ *
  * You can do it on the command line:
- * 
+ *
  *   FACEBOOK_CLIENT_ID=abcd FACEBOOK_CLIENT_SECRET=1234 npm start
- * 
+ *
  * Or, better, you can create a ~/.$your_app_name.env.json file in
  * your home directory, and set them in there:
- * 
+ *
  * {
  *   FACEBOOK_CLIENT_ID: 'abcd',
  *   FACEBOOK_CLIENT_SECRET: '1234',
  * }
- * 
+ *
  * Concentrating your secrets this way will make it less likely that you
  * accidentally push them to Github, for example.
- * 
+ *
  * When you deploy to production, you'll need to set up these environment
  * variables with your hosting provider.
  **/
@@ -74,17 +74,17 @@ OAuth.setupStrategy({
 
 // Other passport configuration:
 
-passport.serializeUser((user, done) => {
-  done(null, user.id)
+passport.serializeUser((member, done) => {
+  done(null, member.id)
 })
 
 passport.deserializeUser(
   (id, done) => {
-    debug('will deserialize user.id=%d', id)
-    User.findById(id)
-      .then(user => {
-        debug('deserialize did ok user.id=%d', user.id)
-        done(null, user)
+    debug('will deserialize member.id=%d', id)
+    Member.findById(id)
+      .then(member => {
+        debug('deserialize did ok member.id=%d', member.id)
+        done(null, member)
       })
       .catch(err => {
         debug('deserialize did fail err=%s', err)
@@ -95,28 +95,28 @@ passport.deserializeUser(
 
 passport.use(new (require('passport-local').Strategy) (
   (email, password, done) => {
-    debug('will authenticate user(email: "%s")', email)
-    User.findOne({where: {email}})
-      .then(user => {
-        if (!user) {
-          debug('authenticate user(email: "%s") did fail: no such user', email)
+    debug('will authenticate member(email: "%s")', email)
+    Member.findOne({where: {email}})
+      .then(member => {
+        if (!member) {
+          debug('authenticate member(email: "%s") did fail: no such member', email)
           return done(null, false, { message: 'Login incorrect' })
         }
-        return user.authenticate(password)
+        return member.authenticate(password)
           .then(ok => {
             if (!ok) {
-              debug('authenticate user(email: "%s") did fail: bad password')
+              debug('authenticate member(email: "%s") did fail: bad password')
               return done(null, false, { message: 'Login incorrect' })
             }
-            debug('authenticate user(email: "%s") did ok: user.id=%d', user.id)
-            done(null, user)
+            debug('authenticate member(email: "%s") did ok: member.id=%d', member.id)
+            done(null, member)
           })
       })
       .catch(done)
   }
 ))
 
-auth.get('/whoami', (req, res) => res.send(req.user))
+auth.get('/whoami', (req, res) => res.send(req.member))
 
 auth.post('/login/:strategy', (req, res, next) =>
   passport.authenticate(req.params.strategy, {

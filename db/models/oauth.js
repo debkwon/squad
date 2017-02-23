@@ -3,7 +3,7 @@
 const debug = require('debug')('oauth')
 const Sequelize = require('sequelize')
 const db = require('APP/db')
-const User = require('./user')
+const Member= require('./member')
 
 const OAuth = db.define('oauths', {
   uid: Sequelize.STRING,
@@ -16,7 +16,7 @@ const OAuth = db.define('oauths', {
   // OAuth v1 fields
   token: Sequelize.STRING,
   tokenSecret: Sequelize.STRING,
-  
+
   // The whole profile as JSON
   profileJson: Sequelize.JSON,
 }, {
@@ -38,19 +38,19 @@ OAuth.V2 = (accessToken, refreshToken, profile, done) =>
       oauth.accessToken = accessToken
       return db.Promise.props({
         oauth,
-        user: oauth.getUser(),
+        member: oauth.getUser(),
         _saveProfile: oauth.save(),
       })
     })
-    .then(({ oauth, user }) => user ||
-      User.create({
+    .then(({ oauth, member }) => member ||
+      Member.create({
         name: profile.displayName,
-      }).then(user => db.Promise.props({
-        user,
-        _setOauthUser: oauth.setUser(user)
+      }).then(member => db.Promise.props({
+        member,
+        _setOauthUser: oauth.setUser(member)
       }))
     )
-    .then(({ user }) => done(null, user))
+    .then(({ member }) => done(null, member))
     .catch(done)
 
 
@@ -60,7 +60,7 @@ OAuth.setupStrategy =
   strategy,
   config,
   oauth=OAuth.V2,
-  passport 
+  passport
 }) => {
   const undefinedKeys = Object.keys(config)
         .map(k => config[k])

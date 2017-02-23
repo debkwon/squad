@@ -9,12 +9,12 @@ import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 
 const ExampleApp = connect(
-  ({ auth }) => ({ user: auth })
+  ({ auth }) => ({ member: auth })
 ) (
-  ({ user, children }) =>
+  ({ member, children }) =>
     <div>
       <nav>
-        {user ? <WhoAmI/> : <Login/>}
+        {member ? <WhoAmI/> : <Login/>}
       </nav>
       {children}
     </div>

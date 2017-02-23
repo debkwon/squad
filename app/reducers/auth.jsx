@@ -3,14 +3,14 @@ import axios from 'axios'
 const reducer = (state=null, action) => {
   switch(action.type) {
   case AUTHENTICATED:
-    return action.user  
+    return action.member
   }
   return state
 }
 
 const AUTHENTICATED = 'AUTHENTICATED'
-export const authenticated = user => ({
-  type: AUTHENTICATED, user
+export const authenticated = member => ({
+  type: AUTHENTICATED, member
 })
 
 export const login = (username, password) =>
@@ -18,7 +18,7 @@ export const login = (username, password) =>
     axios.post('/api/auth/local/login',
       {username, password})
       .then(() => dispatch(whoami()))
-      .catch(() => dispatch(whoami()))      
+      .catch(() => dispatch(whoami()))
 
 export const logout = () =>
   dispatch =>
@@ -30,8 +30,8 @@ export const whoami = () =>
   dispatch =>
     axios.get('/api/auth/whoami')
       .then(response => {
-        const user = response.data
-        dispatch(authenticated(user))
+        const member = response.data
+        dispatch(authenticated(member))
       })
       .catch(failed => dispatch(authenticated(null)))
 
