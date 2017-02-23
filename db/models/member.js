@@ -23,10 +23,6 @@ const Member = db.define('members', {
     type: Sequelize.ARRAY(Sequelize.INTEGER),
     defaultValue: []
   },
-  squads: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER),
-    defaultValue: []
-  },
   password_digest: Sequelize.STRING,
   password: Sequelize.VIRTUAL
 }, {
