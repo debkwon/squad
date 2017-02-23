@@ -20,11 +20,12 @@ const Member = db.define('members', {
     unique: true
   },
   pods: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER)
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+    defaultValue: []
   },
-  isLeader: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
+  squads: {
+    type: Sequelize.ARRAY(Sequelize.INTEGER),
+    defaultValue: []
   },
   password_digest: Sequelize.STRING,
   password: Sequelize.VIRTUAL
