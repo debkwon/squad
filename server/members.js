@@ -1,7 +1,6 @@
 'use strict'
 
-const db = require('APP/db')
-const Member = db.model('members')
+const Member = require('APP/db/models/members')
 const members = require('express').Router()
 
 // const {mustBeLoggedIn, forbidden,} = require('./auth.filters')
@@ -30,7 +29,7 @@ members.put('/:id', (req,res,next) => {
   .catch(next)
 })
 
-Member.delete('/:id', (req,res,next) => {
+members.delete('/:id', (req,res,next) => {
   Member.destroy({
     where:{
       id: req.params.id
