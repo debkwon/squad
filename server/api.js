@@ -8,6 +8,7 @@ api
   .use('/auth', require('./auth'))
   .use('/pod', require('./pod'))
   .use('/members', require('./members'))
+  .use('/preferences', require('./preferences'))
 
 
 // No routes matched? 404.
