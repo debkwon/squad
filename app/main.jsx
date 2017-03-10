@@ -8,6 +8,7 @@ import store from './store'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import Home from './components/Home'
+import LeaderForm from './components/LeaderForm'
 //Material-UI requirements
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
@@ -24,9 +25,9 @@ render (
   <MuiThemeProvider muiTheme={muiTheme}>
     <Provider store={store}>
       <Router history={browserHistory}>
-        <Route path="/" component={Home}>
-          <Route path="/login" component={Login} />
-        </Route>
+        <Route path="/" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/leader-form" component={LeaderForm} />
       </Router>
     </Provider>
   </MuiThemeProvider>,

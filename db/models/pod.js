@@ -24,6 +24,14 @@ const Pod = db.define('pods', {
   squads: {
      type: Sequelize.ARRAY(Sequelize.INTEGER),
      defaultValue: []
+  },
+  squadCount: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
+  },
+  skills: {
+    type: Sequelize.ARRAY(Sequelize.STRING),
+    defaultValue: []
   }
 
 });
