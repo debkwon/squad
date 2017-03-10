@@ -8,7 +8,26 @@ Say you're a project manager and you're forming all these squads. You want to ma
 
 Squad can consolidate anonymously submitted information from 'Members' to make sense of their preferences in order to be best matched in teams requiring a set of skills to get a project done.
 
-NOTES: This is a WIP, more instructions and code to be shipped.
+NOTES: This is a WIP, more instructions and code to be shipped. Building with JS + React + ♥️
+
+##There's no 'i' in team, but there's a 'u' in Squad!
+
+To get started:
+Fork and/or clone this repo
+
+In your command line:
+1) npm install
+2) npm start
+3) npm run build-watch (in another tab/window)
+4) npm run test-watch (to run dem tests)
+
+In your browser, head to localhost:1337
+
+(Make sure you're connected to Postgres if you're getting database errors, and then restart those processes)
+
+![landing_page](https://cloud.githubusercontent.com/assets/8889161/23806024/2096c6f6-058e-11e7-9835-3df02c5b7732.png)
+
+##
 
 ##Who is a Squad Member?
 A squad member is anyone who will be working on a team together. Each member will have to fill out their preferences for each member in their Squad Pod.
