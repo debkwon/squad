@@ -16,10 +16,10 @@ To get started:
 Fork and/or clone this repo
 
 In your command line:
-1) npm install
-2) npm start
-3) npm run build-watch (in another tab/window)
-4) npm run test-watch (to run dem tests)
+  npm install
+  npm start
+  npm run build-watch (in another tab/window)
+  npm run test-watch (to run dem tests)
 
 In your browser, head to localhost:1337
 
