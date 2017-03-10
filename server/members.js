@@ -1,6 +1,6 @@
 'use strict'
 
-const Member = require('APP/db/models/members')
+const Member = require('APP/db/models/member')
 const members = require('express').Router()
 
 // const {mustBeLoggedIn, forbidden,} = require('./auth.filters')

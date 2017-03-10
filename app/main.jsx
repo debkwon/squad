@@ -7,26 +7,28 @@ import {connect, Provider} from 'react-redux'
 import store from './store'
 import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
-
-const ExampleApp = connect(
-  ({ auth }) => ({ member: auth })
-) (
-  ({ member, children }) =>
-    <div>
-      <nav>
-        {member ? <WhoAmI/> : <Login/>}
-      </nav>
-      {children}
-    </div>
-)
+import Home from './components/Home'
+//Material-UI requirements
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { grey400} from 'material-ui/styles/colors';
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: grey400,
+  },
+});
 
 render (
-  <Provider store={store}>
-    <Router history={browserHistory}>
-      <Route path="/" component={ExampleApp}>
-        <Route path="/login" component={Login} />
-      </Route>
-    </Router>
-  </Provider>,
+  <MuiThemeProvider muiTheme={muiTheme}>
+    <Provider store={store}>
+      <Router history={browserHistory}>
+        <Route path="/" component={Home}>
+          <Route path="/login" component={Login} />
+        </Route>
+      </Router>
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('main')
 )
